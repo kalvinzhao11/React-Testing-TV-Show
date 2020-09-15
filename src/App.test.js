@@ -5,9 +5,8 @@ import App from './App'
 
 import { fetchShow as mockFetchShow} from './api/fetchShow'
 
-jest.mock('./api/fetchShow') // mocks all exports coming from taht file
-
-const missionsData = [{
+jest.mock('./api/fetchShow') // mocks all exports coming from that file
+const showData = { data: {
     id: 2993,
     url: 'http://www.tvmaze.com/shows/2993/stranger-things',
     name: 'Stranger Things',
@@ -604,19 +603,21 @@ const missionsData = [{
         },
       ],
     },
-  }];
-console.log(mockFetchShow)
+  }
+}
+// console.log(mockFetchShow)
+
 test('render without errors', () => {
+    mockFetchShow.mockResolvedValueOnce(showData);
     render(<App />);
 })
-
-// test('render missions when API is called', async () => {
-//     //mock the function that makes the API call
-//     // mockFetchShow.mockResolvedValueOnce(missionsData)
-
-//     render(<App />)
-//     const dropdown = await screen.findByText(/select a season/i)
-//     userEvent.click(dropdown)
-//     const season2 = await screen.findByText(/season 2/i)
-//     expect(screen.getAllByTestId(/episode/i)).toHaveLength(3);
-// })
+test('render show info button is pressed', async () => {
+    //mock the function that makes the API call
+    mockFetchShow.mockResolvedValueOnce(showData);
+    render(<App />)
+    const dropdown = await screen.findByText(/select a season/i)
+    userEvent.click(dropdown)
+    const season2 = await screen.findByText(/season 2/i)
+    await userEvent.click(season2)
+    expect(screen.getAllByTestId(/episode/i)).toHaveLength(9);
+})

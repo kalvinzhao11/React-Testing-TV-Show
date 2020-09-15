@@ -19,6 +19,7 @@ export default function App() {
       fetchShow()
         .then(res => {
           setShow(res.data);
+          console.log(res.data)
           setSeasons(formatSeasons(res.data._embedded.episodes));
         });
     fetchShow();
@@ -43,7 +44,7 @@ export default function App() {
         value={selectedSeason || "Select a season"}
         placeholder="Select an option"
       />
-      <Episodes data-testid episodes={episodes} />
+      <Episodes episodes={episodes} />
     </div>
   );
 }
