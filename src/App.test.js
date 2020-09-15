@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, fireEvent, waitFor} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
 
@@ -617,7 +617,13 @@ test('render show info button is pressed', async () => {
     render(<App />)
     const dropdown = await screen.findByText(/select a season/i)
     userEvent.click(dropdown)
-    const season2 = await screen.findByText(/season 2/i)
-    await userEvent.click(season2)
-    expect(screen.getAllByTestId(/episode/i)).toHaveLength(9);
+    const season1 = await screen.findByText(/season 1/i)
+    await userEvent.click(season1)
+    expect(screen.getAllByTestId(/episode/i)).toHaveLength(8);
+
+    // dropdown = await screen.findByTestId(/Select an option/i)
+    // userEvent.click(dropdown)
+    // const season2 = await screen.findByText(/season 2/i)
+    // await userEvent.click(season2)
+    // expect(screen.getAllByTestId(/episode/i)).toHaveLength(9);
 })
